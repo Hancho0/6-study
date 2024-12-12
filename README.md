@@ -41,3 +41,16 @@ Button Control의 일종이며 마우스로 클릭하면 라디오 표시가 on/
 
 8) Combo Box<br>
 List Box의 단점을 해결한 것이다 Combo Box이며 Edit Control과 List Box를 합쳐 놓은 모양이다. 기존의 항목을 선택할 때는 아래쪽의 List Box에서 선택하고 직접 입력해야 할 항목은 Edit Control에서 입력할 수 있으며 Combo Box는 필요할 때만 열어서 사용하고 평소에는 닫아 두기 때문에 화면 면적도 넓게 차지하지 않는다.
+
+[ 실습 ]
+
+대화상자 기반 프로젝트 생성 후
+
+도구 상자 에서 Group Box 컨트롤을 선택하여 배치해준다.
+
+그 후 다음과 같이 라디오 버튼, 체크 박스, 리스트 박스, 에디트 박스, 콤보 박스, 버튼을 배치해준다
+
+그 후 각 이름 설정해주면서 ID 와 캡션을 설정해준다.
+
+![1](https://github.com/user-attachments/assets/c840e379-9e35-440c-b42a-02497fdf420d)
+
