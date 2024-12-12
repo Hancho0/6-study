@@ -92,3 +92,125 @@ void CmessageDlg::OnRadio1()
 	UpdateComboBox();
 }
 ```
+
+IDC_RADIO2 도 똑같이 해준다.
+
+```ruby
+void CmessageDlg::OnRadio2()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	m_listBox.AddString(_T("2번 라디오 버튼 선택"));
+	UpdateComboBox();
+}
+```
+
+CmessageDIg 클래스에 변수를 m_bChecked 로 하고 형식을 bool[2] 로 지정해준다.<br>
+그러나 Visual Studio 2022 가 지속적으로 업데이트 진행하면서 형식을 지정해주면 에러 메시지가 출력된다<br>
+그래서 bool 형식으로 잡고 헤더 파일 가서 bool m_bChecked[2]; 형식으로 잡아준다.<br>
+
+그리고 앞에서 선언한 배열 변수를 추기화 하기 위해서 성성자 함수에 초기화 코드를 추가한다.
+```ruby
+CmessageDlg::CmessageDlg(CWnd* pParent /*=nullptr*/)
+	: CDialogEx(IDD_MESSAGE_DIALOG, pParent)
+	, m_strEdit(_T(""))
+{
+	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	//변수 초기화
+	m_bChecked[0] = m_bChecked[1] = FALSE;
+}
+```
+
+그 후 클래스 마법사에서 IDC_CHECK1 항목에서 BN_CLICKED 메시지를 선택하고 처리기 추가 하여 메시지 핸들러 함수를 추가후 코드를 추가해준다.
+```ruby
+void CmessageDlg::OnClickedCheck1()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	if (m_bChecked[0] == FALSE)
+	{
+		m_bChecked[0] = TRUE;
+		m_listBox.AddString(_T("1번 체크 박스 상태 TRUE"));
+	}
+	else
+	{
+		m_bChecked[0] = FALSE;
+		m_listBox.AddString(_T("1번 체크 박스 상태 FALSE"));
+	}
+	UpdateComboBox();
+}
+```
+
+IDC_CHECK2 항목도 똑같이 해준다.
+```ruby
+void CmessageDlg::OnClickedCheck2()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	if (m_bChecked[1] == FALSE)
+	{
+		m_bChecked[1] = TRUE;
+		m_listBox.AddString(_T("2번 체크 박스 상태 TRUE"));
+	}
+	else
+	{
+		m_bChecked[1] = FALSE;
+		m_listBox.AddString(_T("2번 체크 박스 상태 FALSE"));
+	}
+	UpdateComboBox();
+}
+```
+
+IDC_BUTTON_ADD 메시지 항목에서 BN_CLICKED 에 메시지 핸들러 함수를 추가 후 아래 코드를 작성한다.
+```ruby
+void CmessageDlg::OnClickedButtonAdd()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+	if (m_strEdit.IsEmpty() == FALSE) {
+		m_listBox.AddString(m_strEdit);
+		m_strEdit.Empty();
+	}
+	else {
+		AfxMessageBox(_T("에디트 상자에 문자열이 없습니다."));
+	}
+	UpdateData(FALSE);
+	UpdateComboBox();
+}
+```
+* UpdateData<br>
+UpdateData() 함수의 파라미터가 TRUE일 때는 컨트롤의 데이터를 컨트롤과 연결된 멤버 변수로 가져오는 기능을 하며, 반대로 FALSE일 때는 컨트롤과 연결된 멤버 변수의 내용을 컨드롤에 세팅하는 기능을 한다.
+
+그 후 IDC_BUTTON_INSERT 메시지 항목에서 BN_CLICKED 에 메시지 핸들러 함수를 추가한 후 아래 코드를 작성한다.
+```ruby
+void CmessageDlg::OnClickedButtonInsert()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CString strSelText;
+	int index = m_cbListItem.GetCurSel();
+	if (index != CB_ERR) { //아이템이 선택되었을 경우
+		m_listBox.GetText(index, strSelText);
+		m_listBox.AddString(strSelText);
+		UpdateComboBox();
+	}
+	else { //아이템이 선택되지 않았을 경우
+		AfxMessageBox(_T("콤보 박스에서 삽입할 아이템을 선택하세요."));
+	}
+}
+```
+
+그 후 IDC_BUTTON_DELETE 에도 코드를 작성해준다.
+```ruby
+void CmessageDlg::OnClickedButtonDelete()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	int index = m_cbListItem.GetCurSel();
+	if (index != CB_ERR) {
+		m_listBox.DeleteString(index);
+		UpdateComboBox();
+	}
+	else {
+		AfxMessageBox(_T("콥보 박스에서 삭제할 아이템을 선택하세요."));
+	}
+}
+```
+
+[실행 결과]<br>
+![5](https://github.com/user-attachments/assets/6aa6b38f-0235-419f-99b4-7b6f7c120bee)
