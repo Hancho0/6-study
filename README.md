@@ -54,3 +54,41 @@ List Box의 단점을 해결한 것이다 Combo Box이며 Edit Control과 List B
 
 ![1](https://github.com/user-attachments/assets/c840e379-9e35-440c-b42a-02497fdf420d)
 
+그 후 리스트 박스 하고 콤보 박스에 변수를 추가해준다.
+
+![2](https://github.com/user-attachments/assets/6db88bea-f875-407f-9ab0-4e9be3118fa6)
+![3](https://github.com/user-attachments/assets/a1b07467-79d8-4227-907b-17222a03126c)
+
+그 후 클래스뷰에서 CmessageDIg 에서 함수를 추가해준다.
+
+![4](https://github.com/user-attachments/assets/7a24a95b-7480-44cd-85a3-c3511f73b658)
+
+함수이름 UpdateComboBox 으로 하고 반환 형식은 void로 지정한다.
+
+여기에 List Box의 아이템 수를 세어서 그 만큼 Combo Box에 "리스트 항목: n"이라는 문자열을 추가시키는 코드를 구현한다.
+```ruby
+void CmessageDlg::UpdateComboBox()
+{
+	// TODO: 여기에 구현 코드 추가.
+	int nCnt = m_listBox.GetCount();
+	m_cbListItem.ResetContent();
+
+	for (int i = 0; i < nCnt; i++) {
+		CString strItem;
+		strItem.Format(_T("리스트 항목 %d"), i + 1);
+		m_cbListItem.AddString(strItem);
+	}
+}
+```
+
+클래스 마법사 [개체 ID] 항목에서 IDC_RADIO1을 [메시지] 항목에서 COMMAND 메시지를 선택후 [처리기 추가] 버튼을 선택하면 다음과 같은 메시지 핸들러 함수를 추가한다는 대화상자가 출력된다.
+[멤버 함수 추가] 대화상자에서 지정된 값으로 지정하고 [확인] 버튼을 눌러서 메시지 핸들러 함수를 추가한다.
+
+```ruby
+void CmessageDlg::OnRadio1()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	m_listBox.AddString(_T("1번 라디오 버튼 선택"));
+	UpdateComboBox();
+}
+```
