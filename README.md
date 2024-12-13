@@ -214,3 +214,10 @@ void CmessageDlg::OnClickedButtonDelete()
 
 [실행 결과]<br>
 ![5](https://github.com/user-attachments/assets/6aa6b38f-0235-419f-99b4-7b6f7c120bee)
+
+
+[ 실습 2 ]<br>
+https://github.com/Hancho0/6-study/blob/main/README2.md
+
+-----
+**[ 이번 Study를 통해 느낀점 ]**
