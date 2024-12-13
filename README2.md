@@ -274,3 +274,74 @@ void Cmessage2Dlg::ComputeUnitValue()
 [리소스 뷰]의 Dialog에서 오른쪽 마우스 버튼을 눌러서 나타나는 단축 메뉴에서 [삽입] 항목을 선택한다.
 
 ID를 IDD_DIALOG_UNIT_TABLE로 설정하고 캡션을 변환 단위표로 설정한다.
+
+그 후 Group Box 를 배치하고 각각 "길이" , "무게" 라고 설정한다.
+
+그리고 나서 각 단위별 변환 값을 보여주기 위해 Static Text 를 각 6개씩 총 12개 배치한다.
+
+그리고 나서 각각 캡션을 단위별 변환 값을 캡션으로 지정해준다.
+
+그 후 [MFC 클래스 추가] 이름을 CUnitTableDIg 로 지정한다.
+
+그 후 Cmessage2DIg 에 변수로 m_bUnitViewed 로 하고 형식을 bool 타입으로 지정한다.
+
+그리고 나서 생성자 함수에서 m_bUnitViewed 변수를 false로 초기화한다.
+
+```ruby
+Cmessage2Dlg::Cmessage2Dlg(CWnd* pParent /*=nullptr*/)
+	: CDialogEx(IDD_MESSAGE2_DIALOG, pParent)
+	, m_dPersentValue(0)
+	, m_dChangeValue(0)
+	, m_strPresentUnit(_T(""))
+	, m_strUnit(_T(""))
+	, m_strChangeUnit(_T(""))
+{
+	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	m_bUnitViewed = false;
+}
+```
+
+그리고 나서 m_dlgUnitTable라는 이름의 변수와 형식은 CUnitTableDIg형을 입력하여 변수를 추가한다.
+
+그리고 나서 헤더파일에서 CUnitTableDIg 클래스를 참조하기위해 include 해준다.
+
+```ruby
+#include "CUnitTableDIg.h"
+```
+
+그리고 나서 클래스 마법사에서 [개체 ID] 항목에서 IDC_BUTTON_UNIT_VIEW 선택하고 [메시지]항목에서 BN_CLICKED를 선택하고 코드를 입력한다.
+
+```ruby
+	void Cmessage2Dlg::OnClickedButtonUnitView()
+	{
+		// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+		if (!m_bUnitViewed)
+		{
+			m_dlgUnitTable.Create(IDD_DIALOG_UNIT_TABLE, this);
+
+			CRect rectMain, rectUnitTable;
+			GetWindowRect(&rectMain);
+
+			m_dlgUnitTable.GetWindowRect(&rectUnitTable);
+			m_dlgUnitTable.MoveWindow(rectMain.right, rectMain.top, rectUnitTable.Width(), rectUnitTable.Height());
+
+			m_dlgUnitTable.ShowWindow(SW_SHOW);
+			m_bUnitViewed = TRUE;
+		}
+		else
+		{
+			m_dlgUnitTable.ShowWindow(SW_HIDE);
+			m_dlgUnitTable.DestroyWindow();
+			m_bUnitViewed = FALSE;
+		}
+	}
+```
+
+[ 실행 결과 ]<br>
+![스크린샷 2024-12-13 091111](https://github.com/user-attachments/assets/43814202-3d1a-430b-9dfa-6de2c24eef29)
+![스크린샷 2024-12-13 091123](https://github.com/user-attachments/assets/ef9103f8-9b5a-43fd-acb8-fe528588584b)
+![스크린샷 2024-12-13 091132](https://github.com/user-attachments/assets/d9fea496-08e8-40cc-99e2-1f775b69948c)
+![스크린샷 2024-12-13 091136](https://github.com/user-attachments/assets/48c3abe9-0f71-48c2-9454-4a39b2315217)
+![스크린샷 2024-12-13 091255](https://github.com/user-attachments/assets/33f9346e-f804-4145-84ae-a0df63fe1e3f)
+![스크린샷 2024-12-13 091319](https://github.com/user-attachments/assets/ed5ba9cb-e193-4a3d-8d24-911ab2a0a91c)
+
